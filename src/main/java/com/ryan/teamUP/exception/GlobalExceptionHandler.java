@@ -1,8 +1,8 @@
-package com.ryan.usercenter.exception;
+package com.ryan.teamUP.exception;
 
-import com.ryan.usercenter.common.BaseResponse;
-import com.ryan.usercenter.common.ErrorCode;
-import com.ryan.usercenter.common.ResultUtils;
+import com.ryan.teamUP.common.BaseResponse;
+import com.ryan.teamUP.common.ErrorCode;
+import com.ryan.teamUP.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

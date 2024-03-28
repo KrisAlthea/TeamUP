@@ -1,4 +1,4 @@
-package com.ryan.usercenter.common;
+package com.ryan.teamUP.common;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.ryan.usercenter.model.domain;
+package com.ryan.teamUP.model.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

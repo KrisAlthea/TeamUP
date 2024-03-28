@@ -1,12 +1,12 @@
-package com.ryan.usercenter.service.impl;
+package com.ryan.teamUP.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ryan.usercenter.common.ErrorCode;
-import com.ryan.usercenter.exception.BusinessException;
-import com.ryan.usercenter.service.UserService;
-import com.ryan.usercenter.model.domain.User;
-import com.ryan.usercenter.mapper.UserMapper;
+import com.ryan.teamUP.common.ErrorCode;
+import com.ryan.teamUP.exception.BusinessException;
+import com.ryan.teamUP.service.UserService;
+import com.ryan.teamUP.model.domain.User;
+import com.ryan.teamUP.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.ryan.usercenter.constant.UserConstant.USER_LOGIN_STATE;
+import static com.ryan.teamUP.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * @author Haoran

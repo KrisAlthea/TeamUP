@@ -1,7 +1,7 @@
-package com.ryan.usercenter.service;
+package com.ryan.teamUP.service;
 import java.util.Date;
 
-import com.ryan.usercenter.model.domain.User;
+import com.ryan.teamUP.model.domain.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

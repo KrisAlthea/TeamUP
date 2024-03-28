@@ -1,4 +1,4 @@
-package com.ryan.usercenter.constant;
+package com.ryan.teamUP.constant;
 
 
 public interface UserConstant {

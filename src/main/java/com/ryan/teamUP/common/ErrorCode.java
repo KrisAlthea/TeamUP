@@ -1,4 +1,4 @@
-package com.ryan.usercenter.common;
+package com.ryan.teamUP.common;
 
 /**
  * 错误码

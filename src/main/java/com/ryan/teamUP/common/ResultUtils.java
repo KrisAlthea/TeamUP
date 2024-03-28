@@ -1,4 +1,4 @@
-package com.ryan.usercenter.common;
+package com.ryan.teamUP.common;
 
 /**
  * 返回工具类

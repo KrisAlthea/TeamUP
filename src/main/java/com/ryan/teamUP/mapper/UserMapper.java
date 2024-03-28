@@ -1,6 +1,6 @@
-package com.ryan.usercenter.mapper;
+package com.ryan.teamUP.mapper;
 
-import com.ryan.usercenter.model.domain.User;
+import com.ryan.teamUP.model.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

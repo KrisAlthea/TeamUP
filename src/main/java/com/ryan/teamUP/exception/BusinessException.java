@@ -1,6 +1,6 @@
-package com.ryan.usercenter.exception;
+package com.ryan.teamUP.exception;
 
-import com.ryan.usercenter.common.ErrorCode;
+import com.ryan.teamUP.common.ErrorCode;
 import lombok.Getter;
 
 @Getter

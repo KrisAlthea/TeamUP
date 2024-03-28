@@ -1,6 +1,6 @@
-package com.ryan.usercenter.service;
+package com.ryan.teamUP.service;
 
-import com.ryan.usercenter.model.domain.User;
+import com.ryan.teamUP.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
