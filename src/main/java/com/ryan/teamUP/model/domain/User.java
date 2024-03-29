@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class User implements Serializable {
     /**
-     * 
+     *
      */
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -85,6 +85,14 @@ public class User implements Serializable {
      */
     private String planetCode;
 
+	/**
+     * 标签
+     */
+	private String tags;
+
+    /**
+     * 逻辑删除字段
+     */
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

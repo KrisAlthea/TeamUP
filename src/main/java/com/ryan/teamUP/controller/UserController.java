@@ -11,6 +11,7 @@ import com.ryan.teamUP.model.domain.request.UserRegisterRequest;
 import com.ryan.teamUP.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.Null;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -103,6 +104,16 @@ public class UserController {
 		return ResultUtils.success(list);
 	}
 
+	@GetMapping("/search/tags")
+	public BaseResponse<List<User>> searchUsersByTags (@RequestParam(required = false) List<String> tagNameList){
+		if (CollectionUtils.isEmpty(tagNameList)) {
+			throw new BusinessException(ErrorCode.PARAMS_ERROR);
+		}
+		List<User> users = userService.searchUsersByTags(tagNameList);
+		List<User> list = users.stream().map(
+				user -> userService.getSafetyUser(user)).collect(Collectors.toList());
+		return ResultUtils.success(list);
+	}
 	@PostMapping("/delete")
 	public BaseResponse<Boolean> deleteUser (@RequestBody long id, HttpServletRequest request) {
 		//仅管理员可删除

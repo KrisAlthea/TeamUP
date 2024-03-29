@@ -4,6 +4,7 @@ import com.ryan.teamUP.model.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Haoran
@@ -47,4 +48,6 @@ public interface UserService extends IService<User> {
 	 * @return 退出登录状态
 	 */
 	int userLogout (HttpServletRequest request);
+
+	List<User> searchUsersByTags (List<String> list);
 }
