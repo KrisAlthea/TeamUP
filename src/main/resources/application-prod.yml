@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.116.53.24:3306/citadel
+    url: jdbc:mysql://47.116.53.24:3306/team_up
     username: ryan
     password: ryanpsw
   # session 失效时间
