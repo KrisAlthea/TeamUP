@@ -90,7 +90,7 @@ public class UserController {
 	@GetMapping("/search")
 	public BaseResponse<List<User>> searchUsers (String username, HttpServletRequest request) {
 		//仅管理员可查询
-		if (notAdmin(request)) {
+		if (userService.notAdmin(request)) {
 			throw new BusinessException(ErrorCode.NO_AUTH);
 		}
 
@@ -114,10 +114,11 @@ public class UserController {
 				user -> userService.getSafetyUser(user)).collect(Collectors.toList());
 		return ResultUtils.success(list);
 	}
+
 	@PostMapping("/delete")
 	public BaseResponse<Boolean> deleteUser (@RequestBody long id, HttpServletRequest request) {
 		//仅管理员可删除
-		if (notAdmin(request)) {
+		if (userService.notAdmin(request)) {
 			throw new BusinessException(ErrorCode.NO_AUTH);
 		}
 
@@ -129,11 +130,16 @@ public class UserController {
 		return ResultUtils.success(b);
 	}
 
-	/**
-	 * 是否是管理员
-	 */
-	private boolean notAdmin (HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute(USER_LOGIN_STATE);
-		return user == null || user.getUserRole() != ADMIN_ROLE;
+	@PostMapping("/update")
+	public BaseResponse<Integer> updateUser(@RequestBody User user , HttpServletRequest request) {
+		//验证参数是否为空
+		if (user == null) {
+			throw new BusinessException(ErrorCode.PARAMS_ERROR);
+		}
+		//鉴权
+		User loginUser = userService.getLogininUser(request);
+		int result = userService.updateUser(user,loginUser);
+		return ResultUtils.success(result);
 	}
+
 }
