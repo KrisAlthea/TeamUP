@@ -1,6 +1,7 @@
 package com.ryan.teamUP.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ryan.teamUP.common.BaseResponse;
 import com.ryan.teamUP.common.ErrorCode;
 import com.ryan.teamUP.common.ResultUtils;
@@ -142,4 +143,10 @@ public class UserController {
 		return ResultUtils.success(result);
 	}
 
+	@GetMapping("/recommend")
+	public BaseResponse<Page<User>> recommendUsers(long pageNum, long pageSize) {
+		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+		Page<User> userPage = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+		return ResultUtils.success(userPage);
+	}
 }
