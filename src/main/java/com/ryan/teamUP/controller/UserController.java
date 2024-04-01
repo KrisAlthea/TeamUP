@@ -7,12 +7,11 @@ import com.ryan.teamUP.common.ErrorCode;
 import com.ryan.teamUP.common.ResultUtils;
 import com.ryan.teamUP.exception.BusinessException;
 import com.ryan.teamUP.model.domain.User;
-import com.ryan.teamUP.model.domain.request.UserLoginRequest;
-import com.ryan.teamUP.model.domain.request.UserRegisterRequest;
+import com.ryan.teamUP.model.request.UserLoginRequest;
+import com.ryan.teamUP.model.request.UserRegisterRequest;
 import com.ryan.teamUP.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.CollectionUtils;
@@ -20,12 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.ryan.teamUP.constant.UserConstant.ADMIN_ROLE;
 import static com.ryan.teamUP.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
