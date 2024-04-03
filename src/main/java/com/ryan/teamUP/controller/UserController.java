@@ -110,7 +110,7 @@ public class UserController {
 	}
 
 	@GetMapping("/search/tags")
-	public BaseResponse<List<User>> searchUsersByTags (@RequestParam(required = false) List<String> tagNameList){
+	public BaseResponse<List<User>> searchUsersByTags (@RequestParam(required = false) List<String> tagNameList) {
 		if (CollectionUtils.isEmpty(tagNameList)) {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
@@ -136,36 +136,46 @@ public class UserController {
 	}
 
 	@PostMapping("/update")
-	public BaseResponse<Integer> updateUser(@RequestBody User user , HttpServletRequest request) {
+	public BaseResponse<Integer> updateUser (@RequestBody User user, HttpServletRequest request) {
 		//验证参数是否为空
 		if (user == null) {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
 		//鉴权
 		User loginUser = userService.getLoginUser(request);
-		int result = userService.updateUser(user,loginUser);
+		int result = userService.updateUser(user, loginUser);
 		return ResultUtils.success(result);
 	}
 
 	@GetMapping("/recommend")
-	public BaseResponse<Page<User>> recommendUsers(long pageSize, long pageNum, HttpServletRequest request) {
+	public BaseResponse<Page<User>> recommendUsers (long pageSize, long pageNum, HttpServletRequest request) {
 		User logininUser = userService.getLoginUser(request);
-		String redisKey = String.format("ryan:user:recommend:%s",logininUser.getId());
+		String redisKey = String.format("ryan:user:recommend:%s", logininUser.getId());
 		ValueOperations valueOperations = redisTemplate.opsForValue();
 		//如果有缓存，直接读取
 		Page<User> userPage = (Page<User>) valueOperations.get(redisKey);
-		if (userPage != null){
+		if (userPage != null) {
 			return ResultUtils.success(userPage);
 		}
 		//无缓存，查数据库
 		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-		userPage = userService.page(new Page<>(pageNum,pageSize),queryWrapper);
+		userPage = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
 		//写缓存,10s过期
 		try {
-			valueOperations.set(redisKey,userPage,30000, TimeUnit.MILLISECONDS);
-		} catch (Exception e){
-			log.error("redis set key error",e);
+			valueOperations.set(redisKey, userPage, 30000, TimeUnit.MILLISECONDS);
+		} catch (Exception e) {
+			log.error("redis set key error", e);
 		}
 		return ResultUtils.success(userPage);
+	}
+
+	@GetMapping("/match")
+	public BaseResponse<List<User>> matchUsers (long num, HttpServletRequest request) {
+		if (num <= 0 || num > 10) {
+			throw new BusinessException(ErrorCode.PARAMS_ERROR);
+		}
+		User loginUser = userService.getLoginUser(request);
+		List<User> users = userService.matchUsers(num, loginUser);
+		return ResultUtils.success(users);
 	}
 }
