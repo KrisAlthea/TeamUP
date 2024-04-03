@@ -31,8 +31,8 @@ public class ResultUtils {
 	/**
 	 * 失败返回
 	 *
-	 * @param errorCode 错误码
-	 * @param message  错误信息
+	 * @param errorCode   错误码
+	 * @param message     错误信息
 	 * @param description 错误描述
 	 * @return BaseResponse
 	 */
@@ -43,7 +43,7 @@ public class ResultUtils {
 	/**
 	 * 失败返回
 	 *
-	 * @param errorCode 错误码
+	 * @param errorCode   错误码
 	 * @param description 错误描述
 	 * @return BaseResponse
 	 */
@@ -54,8 +54,8 @@ public class ResultUtils {
 	/**
 	 * 失败返回
 	 *
-	 * @param code 错误码
-	 * @param message  错误信息
+	 * @param code        错误码
+	 * @param message     错误信息
 	 * @param description 错误描述
 	 * @return BaseResponse
 	 */

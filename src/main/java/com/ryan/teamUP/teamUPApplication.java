@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class teamUPApplication {
 
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		SpringApplication.run(teamUPApplication.class, args);
 	}
 

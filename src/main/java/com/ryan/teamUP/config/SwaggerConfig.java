@@ -30,7 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 public class SwaggerConfig {
 
 	@Bean(value = "defaultApi2")
-	public Docket defaultApi2() {
+	public Docket defaultApi2 () {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
 				.select()
@@ -42,14 +42,15 @@ public class SwaggerConfig {
 
 	/**
 	 * api 信息
+	 *
 	 * @return ApiInfo
 	 */
-	private ApiInfo apiInfo() {
+	private ApiInfo apiInfo () {
 		return new ApiInfoBuilder()
 				.title("TeamUP")
 				.description("TeamUP接口文档")
 				.termsOfServiceUrl("https://github.com/KrisAlthea")
-				.contact(new Contact("Ryan","weihaoran.me","weihaoran21@qq.com"))
+				.contact(new Contact("Ryan", "weihaoran.me", "weihaoran21@qq.com"))
 				.version("1.0")
 				.build();
 	}

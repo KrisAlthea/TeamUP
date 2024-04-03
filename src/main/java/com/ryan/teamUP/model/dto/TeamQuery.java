@@ -15,9 +15,6 @@ import java.util.List;
  * @Create 4/1/2024 2:39 PM
  * @Version 1.0
  */
-
-
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class TeamQuery extends PageRequest {

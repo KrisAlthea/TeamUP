@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * @author: shayu
+ * @author Haoran
  * @date: 2022/12/06
- * @ClassName: yupao-backend01
+ * @ClassName: TeamUPApplication
  * @Description:    用户插入单元测试，注意打包时要删掉或忽略，不然打一次包就插入一次
  */
 @SpringBootTest
@@ -37,13 +37,13 @@ public class InsertUserTest {
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < INSERT_NUM; i++) {
             User user = new User();
-            user.setUsername("假沙鱼");
-            user.setUserAccount("yusha");
+            user.setUsername("占位用户");
+            user.setUserAccount("fakeUser");
             user.setAvatarUrl("shanghai.myqcloud.com/shayu931/shayu.png");
             user.setGender(0);
             user.setUserPassword("12345678");
             user.setPhone("123456789108");
-            user.setEmail("shayu-yusha@qq.com");
+            user.setEmail("xxxxxxxxx@qq.com");
             user.setUserStatus(0);
             user.setUserRole(0);
             user.setPlanetCode("931");
@@ -75,13 +75,13 @@ public class InsertUserTest {
             while (true){
                 j++;
                 User user = new User();
-                user.setUsername("假沙鱼");
-                user.setUserAccount("yusha");
+                user.setUsername("占位用户");
+                user.setUserAccount("fakeUser");
                 user.setAvatarUrl("shanghai.myqcloud.com/shayu931/shayu.png");
                 user.setGender(0);
                 user.setUserPassword("12345678");
                 user.setPhone("123456789108");
-                user.setEmail("shayu-yusha@qq.com");
+                user.setEmail("xxxxxxxxx@qq.com");
                 user.setUserStatus(0);
                 user.setUserRole(0);
                 user.setPlanetCode("931");

@@ -12,20 +12,21 @@ import com.ryan.teamUP.model.vo.TeamUserVO;
 import java.util.List;
 
 /**
-* @author Haoran
-* @description 针对表【team(队伍)】的数据库操作Service
-* @createDate 2024-04-01 14:26:05
-*/
+ * @author Haoran
+ * @description 针对表【team(队伍)】的数据库操作Service
+ * @createDate 2024-04-01 14:26:05
+ */
 public interface TeamService extends IService<Team> {
 	/**
-	 *   添加队伍
+	 * 添加队伍
+	 *
 	 * @param team
 	 * @param loginUser
 	 * @return
 	 */
-	long addTeam(Team team, User loginUser);
+	long addTeam (Team team, User loginUser);
 
-	List<TeamUserVO> listTeams(TeamQuery teamQuery, boolean notAdmin);
+	List<TeamUserVO> listTeams (TeamQuery teamQuery, boolean notAdmin);
 
 	boolean updateTeam (TeamUpdateRequest team, User logininUser);
 

@@ -25,7 +25,7 @@ public class InsertUsers {
 	 * 循环插入用户
 	 */
 //    @Scheduled(initialDelay = 5000,fixedRate = Long.MAX_VALUE )
-	public void doInsertUser() {
+	public void doInsertUser () {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		final int INSERT_NUM = 1000;
@@ -45,7 +45,7 @@ public class InsertUsers {
 			userMapper.insert(user);
 		}
 		stopWatch.stop();
-		System.out.println( stopWatch.getLastTaskTimeMillis());
+		System.out.println(stopWatch.getLastTaskTimeMillis());
 
 	}
 }

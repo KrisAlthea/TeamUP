@@ -61,7 +61,7 @@ public interface UserService extends IService<User> {
 	 * @param request
 	 * @return
 	 */
-	boolean notAdmin(HttpServletRequest request);
+	boolean notAdmin (HttpServletRequest request);
 
 	/**
 	 * 是否为管理员
@@ -69,5 +69,7 @@ public interface UserService extends IService<User> {
 	 * @param loginUser
 	 * @return
 	 */
-	boolean notAdmin(User loginUser);
+	boolean notAdmin (User loginUser);
+
+	List<User> matchUsers (long num, User loginUser);
 }

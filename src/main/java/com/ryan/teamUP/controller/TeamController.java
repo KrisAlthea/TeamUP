@@ -9,7 +9,7 @@ import com.ryan.teamUP.exception.BusinessException;
 import com.ryan.teamUP.model.domain.Team;
 import com.ryan.teamUP.model.domain.User;
 import com.ryan.teamUP.model.domain.UserTeam;
-import com.ryan.teamUP.model.dto.TeamAddRequest;
+import com.ryan.teamUP.model.request.TeamAddRequest;
 import com.ryan.teamUP.model.dto.TeamQuery;
 import com.ryan.teamUP.model.request.TeamJoinRequest;
 import com.ryan.teamUP.model.request.TeamQuitRequest;
@@ -20,7 +20,6 @@ import com.ryan.teamUP.service.UserService;
 import com.ryan.teamUP.service.UserTeamService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -28,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -36,15 +36,11 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/team")
-@CrossOrigin(origins = {"http://localhost:5173/"})
 @Slf4j
 public class TeamController {
 
 	@Resource
 	private UserService userService;
-
-	@Resource
-	private RedisTemplate redisTemplate;
 
 	@Resource
 	private TeamService teamService;
@@ -119,7 +115,31 @@ public class TeamController {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
 		boolean notAdmin = userService.notAdmin(request);
+		// 1、查询队伍列表
 		List<TeamUserVO> teamList = teamService.listTeams(teamQuery, notAdmin);
+		final List<Long> teamIdList = teamList.stream().map(TeamUserVO::getId).collect(Collectors.toList());
+		// 2、判断当前用户是否已加入队伍
+		QueryWrapper<UserTeam> userTeamQueryWrapper = new QueryWrapper<>();
+		try {
+			User loginUser = userService.getLoginUser(request);
+			userTeamQueryWrapper.eq("userId", loginUser.getId());
+			userTeamQueryWrapper.in("teamId", teamIdList);
+			List<UserTeam> userTeamList = userTeamService.list(userTeamQueryWrapper);
+			// 已加入的队伍 id 集合
+			Set<Long> hasJoinTeamIdSet = userTeamList.stream().map(UserTeam::getTeamId).collect(Collectors.toSet());
+			teamList.forEach(team -> {
+				boolean hasJoin = hasJoinTeamIdSet.contains(team.getId());
+				team.setHasJoin(hasJoin);
+			});
+		} catch (Exception ignored) {
+		}
+		// 3、查询已加入队伍的人数
+		QueryWrapper<UserTeam> userTeamJoinQueryWrapper = new QueryWrapper<>();
+		userTeamJoinQueryWrapper.in("teamId", teamIdList);
+		List<UserTeam> userTeamList = userTeamService.list(userTeamJoinQueryWrapper);
+		// 队伍 id => 加入这个队伍的用户列表
+		Map<Long, List<UserTeam>> teamIdUserTeamList = userTeamList.stream().collect(Collectors.groupingBy(UserTeam::getTeamId));
+		teamList.forEach(team -> team.setHasJoinNum(teamIdUserTeamList.getOrDefault(team.getId(), new ArrayList<>()).size()));
 		return ResultUtils.success(teamList);
 	}
 
@@ -170,37 +190,39 @@ public class TeamController {
 	}
 
 	/**
-	 *      获取我创建的队伍
+	 * 获取我创建的队伍
+	 *
 	 * @param teamQuery
 	 * @param request
 	 * @return
 	 */
 	@GetMapping("/list/my/create")
-	public BaseResponse<List<TeamUserVO>> listMyCreateTeams(TeamQuery teamQuery, HttpServletRequest request) {
+	public BaseResponse<List<TeamUserVO>> listMyCreateTeams (TeamQuery teamQuery, HttpServletRequest request) {
 		if (teamQuery == null) {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
 		User logininUser = userService.getLoginUser(request);
 		boolean notAdmin = userService.notAdmin(request);
 		teamQuery.setUserId(logininUser.getId());
-		List<TeamUserVO> teamList = teamService.listTeams(teamQuery,notAdmin);
+		List<TeamUserVO> teamList = teamService.listTeams(teamQuery, notAdmin);
 		return ResultUtils.success(teamList);
 	}
 
 	/**
-	 *  获取我加入的队伍
+	 * 获取我加入的队伍
+	 *
 	 * @param teamQuery
 	 * @param request
 	 * @return
 	 */
 	@GetMapping("/list/my/join")
-	public BaseResponse<List<TeamUserVO>> listMyJoinTeams(TeamQuery teamQuery, HttpServletRequest request) {
+	public BaseResponse<List<TeamUserVO>> listMyJoinTeams (TeamQuery teamQuery, HttpServletRequest request) {
 		if (teamQuery == null) {
 			throw new BusinessException(ErrorCode.PARAMS_ERROR);
 		}
 		User logininUser = userService.getLoginUser(request);
 		QueryWrapper<UserTeam> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("userId",logininUser.getId());
+		queryWrapper.eq("userId", logininUser.getId());
 		List<UserTeam> userTeamlist = userTeamService.list(queryWrapper);
 		// 取出不重复的队伍 id
 		//teamId userId
@@ -210,10 +232,11 @@ public class TeamController {
 		//result
 		//1=> 2,3
 		//2=> 3
-		Map<Long, List<UserTeam>> listMap = userTeamlist.stream().collect(Collectors.groupingBy(UserTeam::getUserId));
+		Map<Long, List<UserTeam>> listMap = userTeamlist.stream().
+				collect(Collectors.groupingBy(UserTeam::getTeamId));
 		ArrayList<Long> idList = new ArrayList<>(listMap.keySet());
 		teamQuery.setIdList(idList);
-		List<TeamUserVO> teamList = teamService.listTeams(teamQuery,true);
+		List<TeamUserVO> teamList = teamService.listTeams(teamQuery, true);
 		return ResultUtils.success(teamList);
 	}
 }

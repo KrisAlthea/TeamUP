@@ -22,21 +22,21 @@ public class RedissonTest {
     void test() {
         // list，数据存在本地 JVM 内存中
         List<String> list = new ArrayList<>();
-        list.add("yupi");
+        list.add("ryan");
         System.out.println("list:" + list.get(0));
 
         list.remove(0);
 
         // 数据存在 redis 的内存中
         RList<String> rList = redissonClient.getList("test-list");
-        rList.add("yupi");
+        rList.add("ryan");
         System.out.println("rlist:" + rList.get(0));
         rList.remove(0);
 
         // map
         Map<String, Integer> map = new HashMap<>();
-        map.put("yupi", 10);
-        map.get("yupi");
+        map.put("ryan", 10);
+        map.get("ryan");
 
         RMap<Object, Object> map1 = redissonClient.getMap("test-map");
 
