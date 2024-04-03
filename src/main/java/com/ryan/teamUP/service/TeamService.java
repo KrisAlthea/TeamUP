@@ -3,6 +3,13 @@ package com.ryan.teamUP.service;
 import com.ryan.teamUP.model.domain.Team;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ryan.teamUP.model.domain.User;
+import com.ryan.teamUP.model.dto.TeamQuery;
+import com.ryan.teamUP.model.request.TeamJoinRequest;
+import com.ryan.teamUP.model.request.TeamQuitRequest;
+import com.ryan.teamUP.model.request.TeamUpdateRequest;
+import com.ryan.teamUP.model.vo.TeamUserVO;
+
+import java.util.List;
 
 /**
 * @author Haoran
@@ -17,4 +24,14 @@ public interface TeamService extends IService<Team> {
 	 * @return
 	 */
 	long addTeam(Team team, User loginUser);
+
+	List<TeamUserVO> listTeams(TeamQuery teamQuery, boolean notAdmin);
+
+	boolean updateTeam (TeamUpdateRequest team, User logininUser);
+
+	boolean joinTeam (TeamJoinRequest team, User loginUser);
+
+	boolean quitTeam (TeamQuitRequest team, User loginUser);
+
+	boolean deleteTeam (long id, User loginUser);
 }

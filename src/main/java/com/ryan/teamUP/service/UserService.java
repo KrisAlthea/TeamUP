@@ -51,7 +51,7 @@ public interface UserService extends IService<User> {
 
 	List<User> searchUsersByTags (List<String> list);
 
-	User getLogininUser (HttpServletRequest request);
+	User getLoginUser (HttpServletRequest request);
 
 	int updateUser (User user, User loginUser);
 
